@@ -1,5 +1,7 @@
 package com.murali.textscan;
 
+// ported from the iOS Swift version at https://github.com/DigitalForms/CCValidator by Mariusz Wisniewski
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -117,6 +119,15 @@ public class ContentScanner {
                     final StringBuilder stringBuilder = new StringBuilder();
                     for (int i = 0; i < items.size(); ++i) {
                         TextBlock item = items.valueAt(i);
+
+                        if (CCValidator.validate(item.getValue())) {
+                            stringBuilder.append("{{- is CC -}}");
+                        }
+
+                        if (CCValidator.validateDate(item.getValue())) {
+                            stringBuilder.append("{{- is Date -}}");
+                        }
+
                         stringBuilder.append(item.getValue());
                         stringBuilder.append("\n");
                     }
